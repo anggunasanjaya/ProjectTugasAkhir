@@ -1,10 +1,11 @@
 package projectta;
 
 public class Obat {
+    int id;
     
     String nama;
-    int jumlah;
-    int harga;
+    String jumlah;
+    String harga;
 
     public String getNama() {
         return nama;
@@ -14,20 +15,26 @@ public class Obat {
         this.nama = nama;
     }
 
-    public int getJumlah() {
+    public String getJumlah() {
         return jumlah;
     }
 
-    public void setJumlah(int jumlah) {
+    public void setJumlah(String jumlah) {
         this.jumlah = jumlah;
     }
 
-    public int getHarga() {
+    public String getHarga() {
         return harga;
     }
 
-    public void setHarga(int harga) {
+    public void setHarga(String harga) {
         this.harga = harga;
     }
-    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id=id;
+    }
 }

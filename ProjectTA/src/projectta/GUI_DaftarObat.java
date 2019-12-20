@@ -1,9 +1,15 @@
 package projectta;
 
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 public class GUI_DaftarObat extends javax.swing.JFrame {
+    
+    static DefaultTableModel tableModel;
 
     public GUI_DaftarObat() {
         initComponents();
+        initDataObat();
     }
 
     /**
@@ -19,13 +25,16 @@ public class GUI_DaftarObat extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField_namaobat = new javax.swing.JTextField();
-        jTextField_jumlah = new javax.swing.JTextField();
-        jTextField_harga = new javax.swing.JTextField();
+        etnama = new javax.swing.JTextField();
+        etjumlah = new javax.swing.JTextField();
+        etharga = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblObat = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -37,9 +46,9 @@ public class GUI_DaftarObat extends javax.swing.JFrame {
 
         jLabel4.setText("Jumlah");
 
-        jTextField_harga.addActionListener(new java.awt.event.ActionListener() {
+        etharga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_hargaActionPerformed(evt);
+                ethargaActionPerformed(evt);
             }
         });
 
@@ -51,13 +60,43 @@ public class GUI_DaftarObat extends javax.swing.JFrame {
         });
 
         jButton2.setText("UPDATE");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("DELETE");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("BACK");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+
+        tblObat.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblObat);
+
+        jButton5.setText("Edit");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -69,10 +108,15 @@ public class GUI_DaftarObat extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(45, 45, 45)
-                        .addComponent(jButton2)
-                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(42, 42, 42)
+                                .addComponent(jButton5))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(jButton2)))
+                        .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -83,65 +127,125 @@ public class GUI_DaftarObat extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_namaobat, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(etnama, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etjumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etharga, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(104, 104, 104)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_namaobat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField_harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etnama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etjumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(etharga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton3)
+                            .addComponent(jButton5))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(404, 339));
+        setSize(new java.awt.Dimension(908, 420));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField_hargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_hargaActionPerformed
+    private void ethargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ethargaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_hargaActionPerformed
+    }//GEN-LAST:event_ethargaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Obat obat = new Obat();
-        obat.setNama(jTextField_namaobat.getText());
-        obat.setJumlah(Integer.parseInt(jTextField_jumlah.getText()));
-        obat.setHarga(Integer.parseInt(jTextField_harga.getText()));
+        obat.setNama(etnama.getText());
+        obat.setJumlah(etjumlah.getText());
+        obat.setHarga(etharga.getText());
         AllObject.obatArr.add(obat);
-        jTextField_namaobat.setText("");
-        jTextField_jumlah.setText("");
-        jTextField_harga.setText("");
+        etnama.setText("");
+        etjumlah.setText("");
+        etharga.setText("");
         
+        initDataObat();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         new GUI_MenuLogin().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        for (int i = 0; i < AllObject.obatArr.size(); i++) {
+           if (etnama.getText().equals(AllObject.obatArr.get(i).getNama())) {
+               AllObject.obatArr.get(i).setJumlah(null);
+               AllObject.obatArr.get(i).setHarga(null);
+                AllObject.obatArr.remove(i);
+}
+
+           }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+//     
+//                    initDataObat();
+//
+//        for (int i = 0; i < AllObject.obatArr.size(); i++) {
+//           if (etnama.getText().equals(AllObject.obatArr.get(i).getNama())) {
+//                AllObject.obatArr.get(i).setJumlah(etjumlah.getText());
+//                AllObject.obatArr.get(i).setHarga(etharga.getText());
+//            }
+//                
+//    }
+                int index = tblObat.getSelectedRow();                
+                if(index < 0){
+                    JOptionPane.showMessageDialog(null, "data belum dipilih");
+                }else{
+                   String nama = etnama.getText();
+                   int jumlah = Integer.parseInt(etjumlah.getText());
+                   Float harga = Float.parseFloat(etharga.getText());
+                } 
+                
+                Obat obat = new Obat();
+                Obat update = updateObat(obat, index);
+                initDataObat();
+                resetFieldObat();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        int index = tblObat.getSelectedRow();
+        if(index < 0 ){
+            JOptionPane.showMessageDialog(null, "Data Obat Belum Di pilih ");
+            
+        }else{
+            int id = AllObject.obatArr.get(index).getId();
+            Obat obat = EditObat(id);
+            etnama.setText(obat.getNama());
+            etjumlah.setText(obat.getJumlah());
+            etharga.setText(obat.getHarga());
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,18 +281,59 @@ public class GUI_DaftarObat extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void initDataObat(){
+        String [] headerTable = {"No" , "Nama" , "jumlah" ,"harga"};
+        tableModel = new DefaultTableModel(null,headerTable);
+        tableModel.setRowCount(0);
+        for (int i = 0; i < AllObject.obatArr.size(); i++){
+            tableModel.addRow(new Object []{( i + 1) , AllObject.obatArr.get(i).getNama() , AllObject.obatArr.get(i).getJumlah() , AllObject.obatArr.get(i).getHarga()});
+        }
+        tblObat.setModel(tableModel);
+        
+    }
+    
+    
+    public Obat updateObat(Obat obat,int id){
+        Obat obatUpdate = AllObject.obatArr.get(id);
+        obatUpdate.setNama(obat.getNama());
+        obatUpdate.setJumlah(obat.getJumlah());
+        obatUpdate.setHarga(obat.getHarga());
+        return obatUpdate;
+       
+    }
+    
+    public Obat EditObat ( int id){
+        Obat ObatEdit=null;
+        for(int i=0; i< AllObject.obatArr.size();i++){
+            if( AllObject.obatArr.get(i).getId( )== id){
+                ObatEdit = AllObject.obatArr.get(i);
+                
+            }
+            
+        } return ObatEdit;
+    }
+    
+    public void resetFieldObat(){
+        etnama.setText("");
+        etjumlah.setText("");
+        etharga.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField etharga;
+    private javax.swing.JTextField etjumlah;
+    private javax.swing.JTextField etnama;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField_harga;
-    private javax.swing.JTextField jTextField_jumlah;
-    private javax.swing.JTextField jTextField_namaobat;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblObat;
     // End of variables declaration//GEN-END:variables
 }
